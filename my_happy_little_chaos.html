@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MY HAPPY LITTLE CHAOS ✨</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Beth+Ellen&family=Covered+By+Your+Grace&family=Eagle+Lake&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            editorial: ['"Instrument Serif"', 'serif'],
+            romantic: ['"Eagle Lake"', 'serif'],
+            handwritten: ['"Beth Ellen"', 'cursive'],
+            casual: ['"Covered By Your Grace"', 'cursive'],
+            sans: ['"Montserrat"', 'sans-serif'],
+          },
+          colors: {
+            y2kPink: '#ff007f',
+            y2kBrightPink: '#ff2a9d',
+            y2kLightPink: '#fff0f6',
+            y2kYellow: '#fffb00',
+            y2kBlue: '#00d2ff',
+            y2kMint: '#bbf7d0',
+            y2kPurple: '#cfafec',
+            creamBg: '#faf8f2',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- FontAwesome & Lucide Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #fff0f6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ff2a9d;
+      border-radius: 999px;
+    }
+
+    /* Hot Pink Star Border Pattern */
+    .star-border {
+      background-color: #ff007f;
+      background-image: radial-gradient(white 15%, transparent 16%), radial-gradient(white 15%, transparent 16%);
+      background-size: 20px 20px;
+      background-position: 0 0, 10px 10px;
+    }
+
+    /* Grid layout background with cute dots */
+    .scrapbook-bg {
+      background-color: #faf7f2;
+      background-image: radial-gradient(#ffd0e5 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Cute Sticker Shadow & Hover Animation */
+    .sticker-item {
+      filter: drop-shadow(3px 3px 0px rgba(0, 0, 0, 0.15));
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+    .sticker-item:hover {
+      transform: scale(1.08) rotate(-2deg);
+      filter: drop-shadow(5px 5px 0px rgba(255, 0, 127, 0.3));
+    }
+
+    /* Placed Sticker Canvas Styles */
+    .canvas-sticker {
+      position: absolute;
+      user-select: none;
+      touch-action: none;
+      cursor: move;
+      z-index: 40;
+    }
+    .canvas-sticker .sticker-controls {
+      display: none;
+    }
+    .canvas-sticker:hover .sticker-controls,
+    .canvas-sticker.selected .sticker-controls {
+      display: flex;
+    }
+
+    /* Glassmorphic Call Bar Header */
+    .call-bar {
+      background: rgba(255, 138, 201, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 8px 20px rgba(255, 0, 127, 0.25);
+    }
+
+    /* Cute Tape & Label Effect */
+    .washi-tape {
+      background: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      backdrop-filter: blur(2px);
+    }
+    .washi-tape-pink {
+      background: rgba(255, 182, 217, 0.7);
+    }
+
+    .y2k-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: lowercase;
+      color: white;
+      box-shadow: 2px 2px 0px #000;
+      border: 1px solid #000;
+    }
+
+    /* Dotted cutout borders */
+    .cutout-box {
+      border: 2px dashed #ff2a9d;
+      box-shadow: 6px 6px 0px #ffe4f1;
+    }
+
+    /* Custom Checkboxes */
+    .cute-checkbox:checked {
+      background-color: #ff007f;
+      border-color: #ff007f;
+    }
+
+    /* Dynamic rotate effect on floating stars */
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+      animation: spin-slow 20s linear infinite;
+    }
+
+    @keyframes pulse-subtle {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .animate-pulse-subtle {
+      animation: pulse-subtle 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="scrapbook-bg text-slate-800 font-sans min-h-screen relative overflow-x-hidden pb-24">
+
+  <!-- Top Hot Pink Star Border Banner -->
+  <div class="star-border h-6 w-full fixed top-0 left-0 z-50 border-b-2 border-black"></div>
+
+  <!-- Interactive Floating Background Decorative Canvas Layer -->
+  <div id="stickerCanvas" class="fixed inset-0 pointer-events-none z-30 min-h-screen w-full">
+    <!-- Dynamic stickers will be rendered here -->
+  </div>
+
+  <!-- Sticky Y2K Header / Phone Bar -->
+  <header class="pt-8 px-4 max-w-6xl mx-auto z-40 relative">
+    <div class="call-bar rounded-full p-2 sm:p-3 flex items-center justify-between border-2 border-white text-white mb-6">
+      <div class="flex items-center space-x-3 pl-2">
+        <div class="w-8 h-8 rounded-full bg-white/40 flex items-center justify-center text-white font-bold text-sm">
+          🔮
+        </div>
+        <div>
+          <p class="text-xs sm:text-sm font-semibold tracking-wide font-sans">+888 Romantic Love</p>
+          <p class="text-[10px] sm:text-xs opacity-90 font-casual">time-to-share-story 💌</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center space-x-2 pr-2">
+        <button onclick="toggleStickerDrawer()" class="bg-y2kYellow hover:bg-yellow-300 text-black font-bold px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-xs shadow-md border border-black flex items-center space-x-1 transition">
+          <span>🎀 Drawer</span>
+        </button>
+        <button onclick="exportData()" title="Backup Scrapbook" class="bg-white/80 hover:bg-white text-y2kPink p-2 rounded-full text-xs shadow-sm border border-pink-200 transition">
+          <i class="fa-solid fa-download"></i>
+        </button>
+        <label title="Import Scrapbook" class="bg-white/80 hover:bg-white text-y2kPink p-2 rounded-full text-xs shadow-sm border border-pink-200 transition cursor-pointer">
+          <i class="fa-solid fa-upload"></i>
+          <input type="file" id="importFile" class="hidden" accept=".json" onchange="importData(event)">
+        </label>
+        <a href="#me-inside" class="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center text-white hover:bg-pink-600 transition border border-white">
+          <i class="fa-solid fa-phone text-xs"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Title Header -->
+    <div class="text-center relative my-6">
+      <!-- Decorative Y2K Floating Labels -->
+      <span class="y2k-badge bg-y2kPink absolute -top-4 left-4 sm:left-24 rotate-[-12deg] z-10 font-sans">pretty</span>
+      <span class="y2k-badge bg-y2kBlue absolute top-2 right-6 sm:right-32 rotate-[15deg] z-10 font-sans">baby</span>
+      <span class="y2k-badge bg-y2kPink absolute bottom-0 left-8 sm:left-40 rotate-[6deg] z-10 font-sans">happy</span>
+      <span class="y2k-badge bg-y2kBlue absolute -bottom-4 right-12 sm:right-48 rotate-[-8deg] z-10 font-sans">zaxie</span>
+
+      <!-- Giant Decorative Star Graphics -->
+      <svg class="w-16 h-16 sm:w-24 sm:h-24 text-y2kYellow absolute -top-8 -left-2 sm:left-12 animate-spin-slow opacity-90 pointer-events-none" viewBox="0 0 100 100" fill="currentColor">
+        <polygon points="50,0 63,38 100,50 63,63 50,100 38,63 0,50 38,38"/>
+      </svg>
+      <svg class="w-12 h-12 sm:w-20 sm:h-20 text-y2kYellow absolute -bottom-6 -right-2 sm:right-16 animate-pulse-subtle opacity-90 pointer-events-none" viewBox="0 0 100 100" fill="currentColor">
+        <polygon points="50,0 63,38 100,50 63,63 50,100 38,63 0,50 38,38"/>
+      </svg>
+
+      <h1 class="font-editorial text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-slate-900 drop-shadow-sm uppercase">
+        MY HAPPY LITTLE CHAOS
+      </h1>
+      <p class="font-casual text-xl sm:text-2xl text-y2kPink mt-1 font-semibold max-w-xl mx-auto leading-tight">
+        ✨ A playful control centre for things I'm doing, loving, collecting & looking forward to. ✨
+      </p>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="flex flex-wrap justify-center gap-2 my-8 font-sans text-xs sm:text-sm">
+      <a href="#brain-dump" class="bg-white hover:bg-pink-100 text-slate-800 px-3 py-1.5 rounded-full border border-pink-300 shadow-sm font-semibold transition">💭 Brain Dump</a>
+      <a href="#hobbies" class="bg-white hover:bg-pink-100 text-slate-800 px-3 py-1.5 rounded-full border border-pink-300 shadow-sm font-semibold transition">🎀 Hobby Shop</a>
+      <a href="#watching" class="bg-white hover:bg-pink-100 text-slate-800 px-3 py-1.5 rounded-full border border-pink-300 shadow-sm font-semibold transition">🎬 Watchlist</a>
+      <a href="#rabbit-holes" class="bg-white hover:bg-pink-100 text-slate-800 px-3 py-1.5 rounded-full border border-pink-300 shadow-sm font-semibold transition">🔎 Rabbit Holes</a>
+      <a href="#aesthetics" class="bg-white hover:bg-pink-100 text-slate-800 px-3 py-1.5 rounded-full border border-pink-300 shadow-sm font-semibold transition">🪞 Aesthetics</a>
+      <a href="#rich-life" class="bg-white hover:bg-pink-100 text-slate-800 px-3 py-1.5 rounded-full border border-pink-300 shadow-sm font-semibold transition">🛍️ When I'm Rich</a>
+      <a href="#me-inside" class="bg-white hover:bg-pink-100 text-slate-800 px-3 py-1.5 rounded-full border border-pink-300 shadow-sm font-semibold transition">♡ Me Inside</a>
+    </nav>
+  </header>
+
+  <!-- Main Content Scrapbook Container -->
+  <main class="max-w-6xl mx-auto px-4 space-y-16 relative z-10">
+
+    <!-- 1. THE BRAIN DUMP SECTION -->
+    <section id="brain-dump" class="scroll-mt-24">
+      <div class="bg-white/90 rounded-3xl p-6 sm:p-8 border-2 border-pink-200 shadow-xl relative overflow-hidden backdrop-blur-sm">
+        <div class="washi-tape washi-tape-pink h-6 w-36 absolute -top-2 left-12 rotate-[-3deg]"></div>
+        
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div>
+            <h2 class="font-editorial text-3xl sm:text-4xl text-pink-600 font-bold flex items-center gap-2">
+              <span>#random opinions & thoughts</span> 💭
+            </h2>
+            <p class="font-casual text-lg text-slate-500">Unfiltered mind spills, hot takes, and little observations.</p>
+          </div>
+          <button onclick="openOpinionModal()" class="bg-y2kPink hover:bg-y2kBrightPink text-white font-bold px-4 py-2 rounded-2xl text-xs shadow-md border border-black flex items-center gap-2 transition transform hover:scale-105">
+            <i class="fa-solid fa-plus"></i> Add Opinion
+          </button>
+        </div>
+
+        <!-- Opinions Grid -->
+        <div id="opinionsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Dynamic Opinion Cards -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. HOBBY SHOP SECTION -->
+    <section id="hobbies" class="scroll-mt-24">
+      <div class="bg-white/90 rounded-3xl p-6 sm:p-8 border-2 border-pink-200 shadow-xl relative backdrop-blur-sm">
+        <div class="washi-tape h-6 w-32 absolute -top-2 right-16 rotate-[4deg]"></div>
+
+        <div class="mb-6">
+          <h2 class="font-editorial text-3xl sm:text-4xl text-purple-600 font-bold flex items-center gap-2">
+            <span>#hobbies I have and wanna have</span> 🎀
+          </h2>
+          <p class="font-casual text-lg text-slate-500">Current obsessions & future crafts to master.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- I HAVE CARD -->
+          <div class="bg-pink-50/80 rounded-2xl p-6 border-2 border-pink-300 relative shadow-sm">
+            <span class="y2k-badge bg-pink-500 absolute -top-3 left-6 rotate-[-2deg]">I HAVE</span>
+            <ul class="space-y-3 mt-2 font-sans text-sm">
+              <li class="flex items-center gap-2 text-slate-800 font-semibold">
+                <span class="text-pink-500">✂️</span> Web designing & Editing
+              </li>
+              <li class="flex items-start gap-2 text-slate-800">
+                <span class="text-pink-500 mt-0.5">🎨</span>
+                <div>
+                  <span class="font-semibold">Crafting & Collecting</span>
+                  <div class="flex flex-wrap gap-1.5 mt-2">
+                    <span class="bg-white px-2 py-0.5 rounded-full text-xs text-pink-600 border border-pink-200">Stickers</span>
+                    <span class="bg-white px-2 py-0.5 rounded-full text-xs text-pink-600 border border-pink-200">Pretty Scraps</span>
+                    <span class="bg-white px-2 py-0.5 rounded-full text-xs text-pink-600 border border-pink-200">Letters</span>
+                    <span class="bg-white px-2 py-0.5 rounded-full text-xs text-pink-600 border border-pink-200">Watchlist</span>
+                    <span class="bg-white px-2 py-0.5 rounded-full text-xs text-pink-600 border border-pink-200">Tags</span>
+                    <span class="bg-white px-2 py-0.5 rounded-full text-xs text-pink-600 border border-pink-200">Ribbons</span>
+                    <span class="bg-white px-2 py-0.5 rounded-full text-xs text-pink-600 border border-pink-200">Lomocards</span>
+                    <span class="bg-white px-2 py-0.5 rounded-full text-xs text-pink-600 border border-pink-200">Paperdolls</span>
+                    <span class="bg-white px-2 py-0.5 rounded-full text-xs text-pink-600 border border-pink-200">Currency</span>
+                  </div>
+                </div>
+              </li>
+              <li class="flex items-center gap-2 text-slate-800 font-semibold">
+                <span class="text-pink-500">📑</span> Tracking Watchlists & Organising Lists
+              </li>
+              <li class="flex items-center gap-2 text-slate-800 font-semibold">
+                <span class="text-pink-500">📹</span> Content Creation
+              </li>
+              <li class="flex items-center gap-2 text-slate-800 font-semibold">
+                <span class="text-pink-500">🎧</span> Listening to "RottenMango" podcast
+              </li>
+              <li class="flex items-center gap-2 text-slate-800 font-semibold">
+                <span class="text-pink-500">🇹🇭</span> Learning new Thai words everyday
+              </li>
+            </ul>
+          </div>
+
+          <!-- WANNA HAVE CARD -->
+          <div class="bg-purple-50/80 rounded-2xl p-6 border-2 border-purple-300 relative shadow-sm">
+            <span class="y2k-badge bg-purple-500 absolute -top-3 left-6 rotate-[2deg]">WANNA HAVE</span>
+            <ul class="space-y-3 mt-2 font-sans text-sm">
+              <li class="flex items-center gap-2 text-slate-800 font-medium">
+                <span class="text-purple-500">💿</span> Collect K-Pop Albums & PCs (Photocards)
+              </li>
+              <li class="flex items-center gap-2 text-slate-800 font-medium">
+                <span class="text-purple-500">✨</span> Collect random pretty crafty things
+              </li>
+              <li class="flex items-center gap-2 text-slate-800 font-medium">
+                <span class="text-purple-500">🗣️</span> Learn Thai fluently (REAL)
+              </li>
+              <li class="flex items-center gap-2 text-slate-800 font-medium">
+                <span class="text-purple-500">📦</span> Making themed packages & Penpaling
+              </li>
+              <li class="flex items-start gap-2 text-slate-800 font-medium">
+                <span class="text-purple-500 mt-0.5">📚</span>
+                <div>
+                  <span>Expanding Books Collection</span>
+                  <div class="flex gap-2 mt-1">
+                    <span class="bg-white px-2 py-0.5 rounded-md text-xs text-purple-700 font-semibold border border-purple-200">Stephen King</span>
+                    <span class="bg-white px-2 py-0.5 rounded-md text-xs text-purple-700 font-semibold border border-purple-200">Attack On Titan</span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. THE WATCHING DEPARTMENT SECTION -->
+    <section id="watching" class="scroll-mt-24">
+      <div class="bg-white/90 rounded-3xl p-6 sm:p-8 border-2 border-pink-200 shadow-xl relative backdrop-blur-sm">
+        <div class="washi-tape washi-tape-pink h-6 w-40 absolute -top-3 left-1/3 rotate-[-1deg]"></div>
+
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div>
+            <h2 class="font-editorial text-3xl sm:text-4xl text-blue-600 font-bold flex items-center gap-2">
+              <span>#upcoming series, C-Kdrama & movies</span> 🎬
+            </h2>
+            <p class="font-casual text-lg text-slate-500">GMMTV / DMD Lineups, actors, ships & watchlist priority</p>
+          </div>
+          <button onclick="openWatchlistModal()" class="bg-y2kBlue hover:bg-cyan-400 text-black font-bold px-4 py-2 rounded-2xl text-xs shadow-md border border-black flex items-center gap-2 transition transform hover:scale-105">
+            <i class="fa-solid fa-plus"></i> Add Show / Movie
+          </button>
+        </div>
+
+        <!-- 4 Sectors Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+
+          <!-- 01 HIGHLY ANTICIPATED -->
+          <div class="bg-rose-50 rounded-2xl p-4 border-2 border-rose-300 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between border-b border-rose-200 pb-2 mb-3">
+                <span class="font-editorial text-2xl font-bold text-rose-600">01</span>
+                <span class="text-xs font-bold bg-rose-200 text-rose-800 px-2 py-0.5 rounded">MUST WATCH</span>
+              </div>
+              <h3 class="font-sans font-bold text-sm text-slate-800 uppercase mb-2">HIGHLY ANTICIPATED</h3>
+              <div id="sector-1" class="space-y-2 min-h-[120px]">
+                <!-- Dynamic Items -->
+              </div>
+            </div>
+          </div>
+
+          <!-- 02 INTRIGUED -->
+          <div class="bg-amber-50 rounded-2xl p-4 border-2 border-amber-300 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between border-b border-amber-200 pb-2 mb-3">
+                <span class="font-editorial text-2xl font-bold text-amber-600">02</span>
+                <span class="text-xs font-bold bg-amber-200 text-amber-800 px-2 py-0.5 rounded">EYE ON THIS</span>
+              </div>
+              <h3 class="font-sans font-bold text-sm text-slate-800 uppercase mb-2">INTRIGUED</h3>
+              <div id="sector-2" class="space-y-2 min-h-[120px]">
+                <!-- Dynamic Items -->
+              </div>
+            </div>
+          </div>
+
+          <!-- 03 ON THE FENCE -->
+          <div class="bg-teal-50 rounded-2xl p-4 border-2 border-teal-300 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between border-b border-teal-200 pb-2 mb-3">
+                <span class="font-editorial text-2xl font-bold text-teal-600">03</span>
+                <span class="text-xs font-bold bg-teal-200 text-teal-800 px-2 py-0.5 rounded">MAYBE</span>
+              </div>
+              <h3 class="font-sans font-bold text-sm text-slate-800 uppercase mb-2">ON THE FENCE</h3>
+              <div id="sector-3" class="space-y-2 min-h-[120px]">
+                <!-- Dynamic Items -->
+              </div>
+            </div>
+          </div>
+
+          <!-- 04 LOW PRIORITY -->
+          <div class="bg-slate-50 rounded-2xl p-4 border-2 border-slate-300 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between border-b border-slate-200 pb-2 mb-3">
+                <span class="font-editorial text-2xl font-bold text-slate-600">04</span>
+                <span class="text-xs font-bold bg-slate-200 text-slate-800 px-2 py-0.5 rounded">SOMEDAY</span>
+              </div>
+              <h3 class="font-sans font-bold text-sm text-slate-800 uppercase mb-2">LOW PRIORITY</h3>
+              <div id="sector-4" class="space-y-2 min-h-[120px]">
+                <!-- Dynamic Items -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. RABBIT HOLES SECTION -->
+    <section id="rabbit-holes" class="scroll-mt-24">
+      <div class="bg-white/90 rounded-3xl p-6 sm:p-8 border-2 border-pink-200 shadow-xl relative backdrop-blur-sm">
+        <div class="washi-tape h-6 w-36 absolute -top-3 left-10 rotate-[-4deg]"></div>
+
+        <div class="mb-6">
+          <h2 class="font-editorial text-3xl sm:text-4xl text-emerald-600 font-bold flex items-center gap-2">
+            <span>#things I wanna get into</span> 🔎
+          </h2>
+          <p class="font-casual text-lg text-slate-500">Late night intellectual & creative rabbit holes.</p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          
+          <div class="bg-emerald-50 border-2 border-emerald-300 rounded-2xl p-4 text-center hover:scale-105 transition transform cursor-pointer">
+            <div class="text-3xl mb-2">🎬</div>
+            <h4 class="font-bold text-xs uppercase tracking-wide text-emerald-900">Entertainment</h4>
+            <p class="text-[10px] text-slate-600 mt-1">Filming, storytelling, acting, directing, narratology</p>
+          </div>
+
+          <div class="bg-indigo-50 border-2 border-indigo-300 rounded-2xl p-4 text-center hover:scale-105 transition transform cursor-pointer">
+            <div class="text-3xl mb-2">🧠</div>
+            <h4 class="font-bold text-xs uppercase tracking-wide text-indigo-900">Psychology</h4>
+            <p class="text-[10px] text-slate-600 mt-1">Mindsets, cognitive quirks & behaviors</p>
+          </div>
+
+          <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 text-center hover:scale-105 transition transform cursor-pointer">
+            <div class="text-3xl mb-2">🏛️</div>
+            <h4 class="font-bold text-xs uppercase tracking-wide text-amber-900">Mythology</h4>
+            <p class="text-[10px] text-slate-600 mt-1">Ancient tales & god lore</p>
+          </div>
+
+          <div class="bg-purple-50 border-2 border-purple-300 rounded-2xl p-4 text-center hover:scale-105 transition transform cursor-pointer">
+            <div class="text-3xl mb-2">📜</div>
+            <h4 class="font-bold text-xs uppercase tracking-wide text-purple-900">Folklores</h4>
+            <p class="text-[10px] text-slate-600 mt-1">Cultural myths & fables</p>
+          </div>
+
+          <div class="bg-rose-50 border-2 border-rose-300 rounded-2xl p-4 text-center hover:scale-105 transition transform cursor-pointer">
+            <div class="text-3xl mb-2">👻</div>
+            <h4 class="font-bold text-xs uppercase tracking-wide text-rose-900">Horror & Urban Legends</h4>
+            <p class="text-[10px] text-slate-600 mt-1">Supernatural, uncanny & spooky stories</p>
+          </div>
+
+          <div class="bg-sky-50 border-2 border-sky-300 rounded-2xl p-4 text-center hover:scale-105 transition transform cursor-pointer">
+            <div class="text-3xl mb-2">🔍</div>
+            <h4 class="font-bold text-xs uppercase tracking-wide text-sky-900">Criminology & Philosophy</h4>
+            <p class="text-[10px] text-slate-600 mt-1">True crime analysis & deep ethics</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. AESTHETIC ATTIC SECTION -->
+    <section id="aesthetics" class="scroll-mt-24">
+      <div class="bg-white/90 rounded-3xl p-6 sm:p-8 border-2 border-pink-200 shadow-xl relative backdrop-blur-sm">
+        <div class="washi-tape washi-tape-pink h-6 w-32 absolute -top-3 right-10 rotate-[2deg]"></div>
+
+        <div class="mb-6">
+          <h2 class="font-editorial text-3xl sm:text-4xl text-pink-600 font-bold flex items-center gap-2">
+            <span>#aesthetics I like & color palettes</span> 🪞
+          </h2>
+          <p class="font-casual text-lg text-slate-500">Visual moodboards, subcultures & favorite color combinations.</p>
+        </div>
+
+        <!-- Tags Cloud -->
+        <div class="mb-8">
+          <h3 class="font-romantic text-sm text-slate-700 uppercase tracking-widest mb-3">Vibe Moodboard</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-pink-100 text-pink-700 font-bold px-3 py-1 rounded-full text-xs border border-pink-300">Jumincore</span>
+            <span class="bg-rose-100 text-rose-700 font-bold px-3 py-1 rounded-full text-xs border border-rose-300">Coquette (2027)</span>
+            <span class="bg-purple-100 text-purple-700 font-bold px-3 py-1 rounded-full text-xs border border-purple-300">Shoujo</span>
+            <span class="bg-slate-200 text-slate-800 font-bold px-3 py-1 rounded-full text-xs border border-slate-400">Acubi</span>
+            <span class="bg-amber-100 text-amber-800 font-bold px-3 py-1 rounded-full text-xs border border-amber-300">Bakery (2026)</span>
+            <span class="bg-emerald-100 text-emerald-700 font-bold px-3 py-1 rounded-full text-xs border border-emerald-300">Fairy</span>
+            <span class="bg-pink-200 text-pink-800 font-bold px-3 py-1 rounded-full text-xs border border-pink-400">Princess</span>
+            <span class="bg-cyan-100 text-cyan-800 font-bold px-3 py-1 rounded-full text-xs border border-cyan-300">Y2K</span>
+            <span class="bg-orange-100 text-orange-800 font-bold px-3 py-1 rounded-full text-xs border border-orange-300">Bunny 🐰</span>
+            <span class="bg-yellow-100 text-yellow-800 font-bold px-3 py-1 rounded-full text-xs border border-yellow-300">Café ☕</span>
+            <span class="bg-blue-100 text-blue-800 font-bold px-3 py-1 rounded-full text-xs border border-blue-300">Ocean 🌊</span>
+            <span class="bg-indigo-100 text-indigo-800 font-bold px-3 py-1 rounded-full text-xs border border-indigo-300">Album 💿</span>
+            <span class="bg-teal-100 text-teal-800 font-bold px-3 py-1 rounded-full text-xs border border-teal-300">Beach 🏖️</span>
+            <span class="bg-lime-100 text-lime-800 font-bold px-3 py-1 rounded-full text-xs border border-lime-300">Seasons 🍁</span>
+            <span class="bg-fuchsia-100 text-fuchsia-800 font-bold px-3 py-1 rounded-full text-xs border border-fuchsia-300">Kdrama / Tseries / BL</span>
+            <span class="bg-sky-100 text-sky-800 font-bold px-3 py-1 rounded-full text-xs border border-sky-300">KPOP / TPOP</span>
+          </div>
+        </div>
+
+        <!-- Color Palette Swatches -->
+        <div>
+          <h3 class="font-romantic text-sm text-slate-700 uppercase tracking-widest mb-4">Go-To Palette Swatches</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            
+            <!-- Palette 1 -->
+            <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 shadow-sm">
+              <p class="text-[11px] font-bold text-slate-600 mb-2">Pink + Green / Brown / Yellow / Gray</p>
+              <div class="flex h-8 rounded-lg overflow-hidden border border-black/10">
+                <div class="w-1/5 bg-[#ff69b4]" title="Pink"></div>
+                <div class="w-1/5 bg-[#8bc34a]" title="Green"></div>
+                <div class="w-1/5 bg-[#795548]" title="Brown"></div>
+                <div class="w-1/5 bg-[#ffeb3b]" title="Yellow"></div>
+                <div class="w-1/5 bg-[#9e9e9e]" title="Gray"></div>
+              </div>
+            </div>
+
+            <!-- Palette 2 -->
+            <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 shadow-sm">
+              <p class="text-[11px] font-bold text-slate-600 mb-2">Yellow + Blue + Purple</p>
+              <div class="flex h-8 rounded-lg overflow-hidden border border-black/10">
+                <div class="w-1/3 bg-[#ffe600]" title="Yellow"></div>
+                <div class="w-1/3 bg-[#00bfff]" title="Blue"></div>
+                <div class="w-1/3 bg-[#9b51e0]" title="Purple"></div>
+              </div>
+            </div>
+
+            <!-- Palette 3 -->
+            <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 shadow-sm">
+              <p class="text-[11px] font-bold text-slate-600 mb-2">Raspberry + Pista + Brown</p>
+              <div class="flex h-8 rounded-lg overflow-hidden border border-black/10">
+                <div class="w-1/3 bg-[#e91e63]" title="Raspberry"></div>
+                <div class="w-1/3 bg-[#c8e6c9]" title="Pista"></div>
+                <div class="w-1/3 bg-[#5d4037]" title="Brown"></div>
+              </div>
+            </div>
+
+            <!-- Palette 4 -->
+            <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 shadow-sm">
+              <p class="text-[11px] font-bold text-slate-600 mb-2">Blue + Green + Butter</p>
+              <div class="flex h-8 rounded-lg overflow-hidden border border-black/10">
+                <div class="w-1/3 bg-[#4fc3f7]" title="Blue"></div>
+                <div class="w-1/3 bg-[#81c784]" title="Green"></div>
+                <div class="w-1/3 bg-[#fff59d]" title="Butter"></div>
+              </div>
+            </div>
+
+            <!-- Palette 5 -->
+            <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 shadow-sm">
+              <p class="text-[11px] font-bold text-slate-600 mb-2">Mint + Brown / Pink</p>
+              <div class="flex h-8 rounded-lg overflow-hidden border border-black/10">
+                <div class="w-1/3 bg-[#a7f3d0]" title="Mint"></div>
+                <div class="w-1/3 bg-[#6d4c41]" title="Brown"></div>
+                <div class="w-1/3 bg-[#f472b6]" title="Pink"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. WHEN I'M RICH SECTION -->
+    <section id="rich-life" class="scroll-mt-24">
+      <div class="bg-white/90 rounded-3xl p-6 sm:p-8 border-2 border-pink-200 shadow-xl relative backdrop-blur-sm">
+        <div class="washi-tape washi-tape-pink h-6 w-36 absolute -top-3 left-1/4 rotate-[-3deg]"></div>
+
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div>
+            <h2 class="font-editorial text-3xl sm:text-4xl text-amber-600 font-bold flex items-center gap-2">
+              <span>#oh to be RICH enough to..</span> 🛍️
+            </h2>
+            <p class="font-casual text-lg text-slate-500">Dream shopping list & future manifest goals.</p>
+          </div>
+          <button onclick="addWishlistItem()" class="bg-amber-400 hover:bg-yellow-400 text-black font-bold px-4 py-2 rounded-2xl text-xs shadow-md border border-black flex items-center gap-2 transition transform hover:scale-105">
+            <i class="fa-solid fa-plus"></i> Add Wish Item
+          </button>
+        </div>
+
+        <div id="wishlistContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          <!-- Dynamic Wishlist Checkboxes will load here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. ME INSIDE SECTION -->
+    <section id="me-inside" class="scroll-mt-24">
+      <div class="bg-white/90 rounded-3xl p-6 sm:p-8 border-2 border-pink-200 shadow-xl relative backdrop-blur-sm">
+        <div class="washi-tape h-6 w-36 absolute -top-3 right-1/4 rotate-[3deg]"></div>
+
+        <div class="mb-6 text-center">
+          <h2 class="font-editorial text-4xl sm:text-5xl text-pink-600 font-bold">
+            #ME INSIDE! ♡
+          </h2>
+          <p class="font-casual text-xl text-slate-500">The complex, beautiful duality of who I am.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+          <!-- Personality Traits Card -->
+          <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-6 border-2 border-pink-300 relative shadow-sm">
+            <span class="y2k-badge bg-y2kPink absolute -top-3 left-6">PERSONALITY TRAITS 🌟</span>
+            <ul class="space-y-2 mt-4 text-sm font-sans">
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-pink-500">🌸</span> Creative minded</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-pink-500">💡</span> Curious & Open-minded</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-pink-500">🪞</span> Reflective</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-pink-500">💌</span> Emotionally expressive & Sentimental</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-pink-500">☁️</span> Idealistic</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-pink-500">🤝</span> Independent & connection-oriented</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-pink-500">🎀</span> Detail-conscious</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-pink-500">✨</span> Authentic & opinionated</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-pink-500">🚀</span> Ambitious but easily overwhelmed</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-pink-500">🎨</span> Playful & Multifaceted</li>
+            </ul>
+          </div>
+
+          <!-- Possible Weaknesses Card -->
+          <div class="bg-gradient-to-br from-slate-50 to-purple-50 rounded-2xl p-6 border-2 border-purple-300 relative shadow-sm">
+            <span class="y2k-badge bg-purple-600 absolute -top-3 left-6">(POSSIBLE) WEAKNESSES ☁️</span>
+            <ul class="space-y-2 mt-4 text-sm font-sans">
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-purple-500">🌀</span> Overthinking</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-purple-500">⚖️</span> Indecisiveness</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-purple-500">⚡</span> All OR Nothing thinking</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-purple-500">👑</span> High expectations</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-purple-500">🌊</span> Inconsistency</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-purple-500">🌋</span> Overwhelm</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-purple-500">🌧️</span> Sensitivity to misunderstanding</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-purple-500">🧱</span> Resistance to rigid routines</li>
+              <li class="flex items-center gap-2 text-slate-800"><span class="text-purple-500">🎈</span> Self imposed pressure</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive Sticker Drawer Drawer Drawer Modal/Sidebar -->
+  <div id="stickerDrawerModal" class="fixed inset-y-0 right-0 w-80 sm:w-96 bg-white/95 backdrop-blur-md shadow-2xl border-l-4 border-pink-400 z-50 transform translate-x-full transition-transform duration-300 ease-in-out p-6 overflow-y-auto">
+    <div class="flex items-center justify-between pb-4 border-b border-pink-200 mb-4">
+      <h3 class="font-editorial text-2xl font-bold text-pink-600 flex items-center gap-2">
+        <span>Sticker Drawer</span> 🎀
+      </h3>
+      <button onclick="toggleStickerDrawer()" class="text-slate-400 hover:text-black text-xl">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Custom URL Sticker Creator -->
+    <div class="mb-6 bg-pink-50 p-3 rounded-2xl border border-pink-200">
+      <h4 class="font-bold text-xs text-pink-700 uppercase mb-2">Paste Custom Sticker URL (PNG/GIF)</h4>
+      <div class="space-y-2">
+        <input type="url" id="customStickerUrl" placeholder="https://example.com/sticker.png" class="w-full text-xs p-2 rounded-xl border border-pink-300 focus:outline-none focus:border-pink-500">
+        <button onclick="addCustomUrlSticker()" class="w-full bg-y2kPink text-white font-bold py-1.5 rounded-xl text-xs shadow-sm hover:bg-pink-600 transition">
+          Add Custom Sticker
+        </button>
+      </div>
+    </div>
+
+    <!-- Emoji Sticker Packs -->
+    <div class="space-y-4">
+      <h4 class="font-bold text-xs text-slate-600 uppercase">Click Emoji Sticker to Spawn</h4>
+      
+      <div class="grid grid-cols-5 gap-2 text-2xl bg-slate-50 p-3 rounded-2xl border border-slate-200">
+        <button onclick="spawnEmojiSticker('🎀')" class="hover:scale-125 transition">🎀</button>
+        <button onclick="spawnEmojiSticker('✨')" class="hover:scale-125 transition">✨</button>
+        <button onclick="spawnEmojiSticker('🍡')" class="hover:scale-125 transition">🍡</button>
+        <button onclick="spawnEmojiSticker('🍥')" class="hover:scale-125 transition">🍥</button>
+        <button onclick="spawnEmojiSticker('⭐')" class="hover:scale-125 transition">⭐</button>
+        <button onclick="spawnEmojiSticker('💖')" class="hover:scale-125 transition">💖</button>
+        <button onclick="spawnEmojiSticker('🐰')" class="hover:scale-125 transition">🐰</button>
+        <button onclick="spawnEmojiSticker('🧸')" class="hover:scale-125 transition">🧸</button>
+        <button onclick="spawnEmojiSticker('📺')" class="hover:scale-125 transition">📺</button>
+        <button onclick="spawnEmojiSticker('🎧')" class="hover:scale-125 transition">🎧</button>
+        <button onclick="spawnEmojiSticker('🌸')" class="hover:scale-125 transition">🌸</button>
+        <button onclick="spawnEmojiSticker('📜')" class="hover:scale-125 transition">📜</button>
+        <button onclick="spawnEmojiSticker('🔮')" class="hover:scale-125 transition">🔮</button>
+        <button onclick="spawnEmojiSticker('🍵')" class="hover:scale-125 transition">🍵</button>
+        <button onclick="spawnEmojiSticker('🍿')" class="hover:scale-125 transition">🍿</button>
+      </div>
+    </div>
+
+    <div class="mt-6 pt-4 border-t border-slate-200">
+      <button onclick="clearAllStickers()" class="w-full bg-rose-100 text-rose-700 font-bold py-2 rounded-xl text-xs hover:bg-rose-200 transition">
+        🗑️ Clear All Placed Canvas Stickers
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal for Opinion Add/Edit -->
+  <div id="opinionModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 border-2 border-pink-300 shadow-2xl relative">
+      <h3 class="font-editorial text-2xl font-bold text-pink-600 mb-4" id="opinionModalTitle">Add New Opinion 💭</h3>
+      <input type="hidden" id="opinionId">
+      <div class="space-y-4 font-sans">
+        <div>
+          <label class="text-xs font-bold text-slate-600">Opinion Title / Topic</label>
+          <input type="text" id="opinionTitle" class="w-full p-2.5 rounded-xl border border-pink-300 text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. Vintage CDs sound better">
+        </div>
+        <div>
+          <label class="text-xs font-bold text-slate-600">Your Opinion / Thought</label>
+          <textarea id="opinionBody" rows="3" class="w-full p-2.5 rounded-xl border border-pink-300 text-sm focus:outline-none focus:border-pink-500" placeholder="Write your thoughts here..."></textarea>
+        </div>
+        <div>
+          <label class="text-xs font-bold text-slate-600">Tag Vibe</label>
+          <input type="text" id="opinionTag" class="w-full p-2.5 rounded-xl border border-pink-300 text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. #music, #crafts">
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 mt-6">
+        <button onclick="closeOpinionModal()" class="px-4 py-2 text-xs font-bold text-slate-500 hover:text-black">Cancel</button>
+        <button onclick="saveOpinion()" class="bg-y2kPink text-white font-bold px-4 py-2 rounded-xl text-xs shadow-md">Save Thought</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Watchlist Add -->
+  <div id="watchlistModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 border-2 border-blue-300 shadow-2xl relative">
+      <h3 class="font-editorial text-2xl font-bold text-blue-600 mb-4">Add Watchlist Item 🎬</h3>
+      <div class="space-y-4 font-sans">
+        <div>
+          <label class="text-xs font-bold text-slate-600">Show Title</label>
+          <input type="text" id="watchTitle" class="w-full p-2.5 rounded-xl border border-blue-300 text-sm focus:outline-none focus:border-blue-500" placeholder="e.g. GMMTV 2026 Lineup Show">
+        </div>
+        <div>
+          <label class="text-xs font-bold text-slate-600">Sector Priority</label>
+          <select id="watchSector" class="w-full p-2.5 rounded-xl border border-blue-300 text-sm focus:outline-none focus:border-blue-500">
+            <option value="1">01 HIGHLY ANTICIPATED</option>
+            <option value="2">02 INTRIGUED</option>
+            <option value="3">03 ON THE FENCE</option>
+            <option value="4">04 LOW PRIORITY</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs font-bold text-slate-600">Actors / Ships / Note</label>
+          <input type="text" id="watchNotes" class="w-full p-2.5 rounded-xl border border-blue-300 text-sm focus:outline-none focus:border-blue-500" placeholder="e.g. Main Leads, DMD Lineup">
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 mt-6">
+        <button onclick="closeWatchlistModal()" class="px-4 py-2 text-xs font-bold text-slate-500 hover:text-black">Cancel</button>
+        <button onclick="saveWatchlistItem()" class="bg-y2kBlue text-black font-bold px-4 py-2 rounded-xl text-xs shadow-md">Add to Watchlist</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Hot Pink Star Border Banner -->
+  <div class="star-border h-6 w-full fixed bottom-0 left-0 z-50 border-t-2 border-black"></div>
+
+  <!-- Application Logic Scripts -->
+  <script>
+    /* Default Initial State Data */
+    const defaultOpinions = [
+      { id: '1', title: 'Physical Albums & Photobooks', body: 'Digital music is convenient, but unboxing physical photobooks, photocards & scrapbooks feels magical.', tag: '#music' },
+      { id: '2', title: 'Late Night Story Narratives', body: 'Listening to true crime & horror narration podcasts like RottenMango while editing graphics is the ultimate vibe.', tag: '#podcast' },
+      { id: '3', title: 'Craft Supplies Hoarding', body: 'Buying pretty stationery, stickers & paper scraps is a completely separate hobby from actually using them!', tag: '#crafts' }
+    ];
+
+    const defaultWatchlist = [
+      { id: 'w1', title: 'GMMTV 2026 Tentpole Series', sector: 1, notes: 'Highly anticipated main ship lineup' },
+      { id: 'w2', title: 'DMD Lineup New Drama', sector: 1, notes: 'Must watch premiere' },
+      { id: 'w3', title: 'Historical C-Drama Romance', sector: 2, notes: 'Stunning costume design & lore' },
+      { id: 'w4', title: 'Psychological Thriller Kdrama', sector: 3, notes: 'Awaiting reviews after episode 4' },
+      { id: 'w5', title: 'Slice of Life Anime', sector: 4, notes: 'Casual Sunday comfort watch' }
+    ];
+
+    const defaultWishlist = [
+      { id: 'rk1', text: "Empty my 'cart'", checked: false },
+      { id: 'rk2', text: "Upgrade my desk setup", checked: true },
+      { id: 'rk3', text: "Stationery hauls", checked: false },
+      { id: 'rk4', text: "Creator setup", checked: false },
+      { id: 'rk5', text: "Buy Craft supplies", checked: true },
+      { id: 'rk6', text: "Room decors", checked: false },
+      { id: 'rk7', text: "Useful Subscriptions", checked: false },
+      { id: 'rk8', text: "Fund one project of mine", checked: false },
+      { id: 'rk9', text: "Collect 90's items (CD, Posters)", checked: true },
+      { id: 'rk10', text: "Gifts for future birthdays (for me)", checked: false },
+      { id: 'rk11', text: "Buy MDZS novels, AOT Manga", checked: true },
+      { id: 'rk12', text: "Buy a printer & print 24/7", checked: false },
+      { id: 'rk13', text: "Buy official merchs", checked: false },
+      { id: 'rk14', text: "Build dream pc collection", checked: false },
+      { id: 'rk15', text: "Gifts for friends & families", checked: false },
+      { id: 'rk16', text: "Launch 'Mail Club'", checked: false },
+      { id: 'rk17', text: "Memory box", checked: true },
+      { id: 'rk18', text: "Take peoples out", checked: false },
+      { id: 'rk19', text: "Attend concerts", checked: false },
+      { id: 'rk20', text: "Thailand saves", checked: false },
+      { id: 'rk21', text: "Start Penpal'ing", checked: false },
+      { id: 'rk22', text: "Buy a lot of outfits", checked: false },
+      { id: 'rk23', text: "Buy 'Flower Knows'", checked: false }
+    ];
+
+    const defaultStickers = [
+      { id: 's1', type: 'emoji', content: '🍡', x: 25, y: 160, scale: 1.4, rotation: -10 },
+      { id: 's2', type: 'emoji', content: '🍥', x: 80, y: 320, scale: 1.2, rotation: 15 },
+      { id: 's3', type: 'emoji', content: '🎀', x: 85, y: 90, scale: 1.5, rotation: -5 }
+    ];
+
+    // State Variables
+    let opinions = JSON.parse(localStorage.getItem('my_chaos_opinions')) || defaultOpinions;
+    let watchlist = JSON.parse(localStorage.getItem('my_chaos_watchlist')) || defaultWatchlist;
+    let wishlist = JSON.parse(localStorage.getItem('my_chaos_wishlist')) || defaultWishlist;
+    let stickers = JSON.parse(localStorage.getItem('my_chaos_stickers')) || defaultStickers;
+
+    // Render Initial Functions on Load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderOpinions();
+      renderWatchlist();
+      renderWishlist();
+      renderStickers();
+    });
+
+    /* OPINIONS FUNCTIONS */
+    function renderOpinions() {
+      const container = document.getElementById('opinionsContainer');
+      container.innerHTML = '';
+      opinions.forEach(op => {
+        const card = document.createElement('div');
+        card.className = 'bg-pink-50/90 rounded-2xl p-4 border border-pink-200 relative shadow-sm flex flex-col justify-between hover:shadow-md transition';
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-xs font-bold text-pink-600 bg-pink-100 px-2 py-0.5 rounded-md">${op.tag || '#opinion'}</span>
+              <div class="flex gap-1 text-slate-400 text-xs">
+                <button onclick="editOpinion('${op.id}')" class="hover:text-pink-600 p-1"><i class="fa-solid fa-pen"></i></button>
+                <button onclick="deleteOpinion('${op.id}')" class="hover:text-rose-600 p-1"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <h4 class="font-bold text-slate-800 text-sm mb-1">${op.title}</h4>
+            <p class="text-xs text-slate-600 font-sans leading-relaxed">${op.body}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      localStorage.setItem('my_chaos_opinions', JSON.stringify(opinions));
+    }
+
+    function openOpinionModal() {
+      document.getElementById('opinionId').value = '';
+      document.getElementById('opinionTitle').value = '';
+      document.getElementById('opinionBody').value = '';
+      document.getElementById('opinionTag').value = '';
+      document.getElementById('opinionModalTitle').innerText = 'Add New Opinion 💭';
+      document.getElementById('opinionModal').classList.remove('hidden');
+    }
+
+    function closeOpinionModal() {
+      document.getElementById('opinionModal').classList.add('hidden');
+    }
+
+    function saveOpinion() {
+      const id = document.getElementById('opinionId').value || Date.now().toString();
+      const title = document.getElementById('opinionTitle').value.trim();
+      const body = document.getElementById('opinionBody').value.trim();
+      const tag = document.getElementById('opinionTag').value.trim();
+
+      if (!title || !body) return;
+
+      const existingIndex = opinions.findIndex(o => o.id === id);
+      if (existingIndex > -1) {
+        opinions[existingIndex] = { id, title, body, tag };
+      } else {
+        opinions.push({ id, title, body, tag });
+      }
+
+      renderOpinions();
+      closeOpinionModal();
+    }
+
+    function editOpinion(id) {
+      const op = opinions.find(o => o.id === id);
+      if (!op) return;
+      document.getElementById('opinionId').value = op.id;
+      document.getElementById('opinionTitle').value = op.title;
+      document.getElementById('opinionBody').value = op.body;
+      document.getElementById('opinionTag').value = op.tag || '';
+      document.getElementById('opinionModalTitle').innerText = 'Edit Opinion 💭';
+      document.getElementById('opinionModal').classList.remove('hidden');
+    }
+
+    function deleteOpinion(id) {
+      opinions = opinions.filter(o => o.id !== id);
+      renderOpinions();
+    }
+
+    /* WATCHLIST FUNCTIONS */
+    function renderWatchlist() {
+      [1, 2, 3, 4].forEach(sec => {
+        const secContainer = document.getElementById(`sector-${sec}`);
+        secContainer.innerHTML = '';
+        const items = watchlist.filter(w => w.sector === sec);
+        items.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm text-xs relative group';
+          div.innerHTML = `
+            <div class="flex justify-between items-start">
+              <span class="font-bold text-slate-800">${item.title}</span>
+              <button onclick="deleteWatchlistItem('${item.id}')" class="text-slate-300 hover:text-rose-500 opacity-0 group-hover:opacity-100 transition"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            ${item.notes ? `<p class="text-[10px] text-slate-500 mt-1 font-casual">${item.notes}</p>` : ''}
+          `;
+          secContainer.appendChild(div);
+        });
+      });
+      localStorage.setItem('my_chaos_watchlist', JSON.stringify(watchlist));
+    }
+
+    function openWatchlistModal() {
+      document.getElementById('watchTitle').value = '';
+      document.getElementById('watchNotes').value = '';
+      document.getElementById('watchlistModal').classList.remove('hidden');
+    }
+
+    function closeWatchlistModal() {
+      document.getElementById('watchlistModal').classList.add('hidden');
+    }
+
+    function saveWatchlistItem() {
+      const title = document.getElementById('watchTitle').value.trim();
+      const sector = parseInt(document.getElementById('watchSector').value);
+      const notes = document.getElementById('watchNotes').value.trim();
+
+      if (!title) return;
+
+      watchlist.push({ id: Date.now().toString(), title, sector, notes });
+      renderWatchlist();
+      closeWatchlistModal();
+    }
+
+    function deleteWatchlistItem(id) {
+      watchlist = watchlist.filter(w => w.id !== id);
+      renderWatchlist();
+    }
+
+    /* WISHLIST FUNCTIONS */
+    function renderWishlist() {
+      const container = document.getElementById('wishlistContainer');
+      container.innerHTML = '';
+      wishlist.forEach(item => {
+        const card = document.createElement('label');
+        card.className = `flex items-start gap-2.5 p-3 rounded-2xl border transition cursor-pointer ${
+          item.checked ? 'bg-amber-100/60 border-amber-300 line-through text-slate-400' : 'bg-amber-50/80 border-amber-200 text-slate-800 hover:bg-amber-100/50'
+        }`;
+        card.innerHTML = `
+          <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleWishitem('${item.id}')" class="cute-checkbox mt-0.5 rounded text-amber-500 focus:ring-0">
+          <span class="text-xs font-semibold leading-tight">${item.text}</span>
+        `;
+        container.appendChild(card);
+      });
+      localStorage.setItem('my_chaos_wishlist', JSON.stringify(wishlist));
+    }
+
+    function toggleWishitem(id) {
+      const item = wishlist.find(w => w.id === id);
+      if (item) {
+        item.checked = !item.checked;
+        renderWishlist();
+      }
+    }
+
+    function addWishlistItem() {
+      const text = prompt("What would you love to get or do when you are rich?");
+      if (text && text.trim()) {
+        wishlist.push({ id: Date.now().toString(), text: text.trim(), checked: false });
+        renderWishlist();
+      }
+    }
+
+    /* INTERACTIVE STICKER DRAWER & CANVAS LOGIC */
+    function toggleStickerDrawer() {
+      const modal = document.getElementById('stickerDrawerModal');
+      modal.classList.toggle('translate-x-full');
+    }
+
+    function spawnEmojiSticker(emoji) {
+      const newSticker = {
+        id: 'stk_' + Date.now(),
+        type: 'emoji',
+        content: emoji,
+        x: Math.random() * (window.innerWidth - 120) + 20,
+        y: window.scrollY + 150 + Math.random() * 200,
+        scale: 1.2,
+        rotation: (Math.random() * 30) - 15
+      };
+      stickers.push(newSticker);
+      renderStickers();
+    }
+
+    function addCustomUrlSticker() {
+      const urlInput = document.getElementById('customStickerUrl');
+      const url = urlInput.value.trim();
+      if (!url) return;
+
+      const newSticker = {
+        id: 'stk_' + Date.now(),
+        type: 'image',
+        content: url,
+        x: Math.random() * (window.innerWidth - 150) + 20,
+        y: window.scrollY + 150 + Math.random() * 200,
+        scale: 1,
+        rotation: 0
+      };
+      stickers.push(newSticker);
+      renderStickers();
+      urlInput.value = '';
+    }
+
+    function renderStickers() {
+      const canvas = document.getElementById('stickerCanvas');
+      canvas.innerHTML = '';
+      stickers.forEach(stk => {
+        const div = document.createElement('div');
+        div.className = 'canvas-sticker sticker-item pointer-events-auto';
+        div.id = stk.id;
+        div.style.left = `${stk.x}px`;
+        div.style.top = `${stk.y}px`;
+        div.style.transform = `scale(${stk.scale}) rotate(${stk.rotation}deg)`;
+
+        let innerContent = '';
+        if (stk.type === 'emoji') {
+          innerContent = `<span class="text-4xl drop-shadow-md">${stk.content}</span>`;
+        } else {
+          innerContent = `<img src="${stk.content}" onerror="this.src='https://placehold.co/80x80/ff007f/fff?text=Sticker'" class="w-20 h-20 object-contain drop-shadow-md pointer-events-none">`;
+        }
+
+        div.innerHTML = `
+          ${innerContent}
+          <div class="sticker-controls absolute -top-3 -right-3 gap-1 bg-white/90 rounded-full p-1 border border-pink-300 shadow-md">
+            <button onclick="rotateSticker('${stk.id}')" title="Rotate" class="text-[10px] text-pink-600 w-4 h-4 rounded-full hover:bg-pink-100 flex items-center justify-center"><i class="fa-solid fa-rotate"></i></button>
+            <button onclick="resizeSticker('${stk.id}')" title="Resize" class="text-[10px] text-blue-600 w-4 h-4 rounded-full hover:bg-blue-100 flex items-center justify-center"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></button>
+            <button onclick="deleteSticker('${stk.id}')" title="Delete" class="text-[10px] text-rose-600 w-4 h-4 rounded-full hover:bg-rose-100 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+        `;
+
+        // Enable Dragging
+        makeDraggable(div, stk);
+        canvas.appendChild(div);
+      });
+      localStorage.setItem('my_chaos_stickers', JSON.stringify(stickers));
+    }
+
+    function makeDraggable(element, stickerObj) {
+      let isDragging = false;
+      let startX, startY, initialX, initialY;
+
+      element.addEventListener('mousedown', startDrag);
+      element.addEventListener('touchstart', startDrag, { passive: false });
+
+      function startDrag(e) {
+        if (e.target.closest('.sticker-controls')) return;
+        isDragging = true;
+        element.classList.add('selected');
+        
+        const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+        startX = clientX;
+        startY = clientY;
+        initialX = stickerObj.x;
+        initialY = stickerObj.y;
+
+        document.addEventListener('mousemove', onDrag);
+        document.addEventListener('touchmove', onDrag, { passive: false });
+        document.addEventListener('mouseup', stopDrag);
+        document.addEventListener('touchend', stopDrag);
+      }
+
+      function onDrag(e) {
+        if (!isDragging) return;
+        if (e.cancelable) e.preventDefault();
+
+        const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+        const dx = clientX - startX;
+        const dy = clientY - startY;
+
+        stickerObj.x = initialX + dx;
+        stickerObj.y = initialY + dy;
+
+        element.style.left = `${stickerObj.x}px`;
+        element.style.top = `${stickerObj.y}px`;
+      }
+
+      function stopDrag() {
+        if (isDragging) {
+          isDragging = false;
+          element.classList.remove('selected');
+          document.removeEventListener('mousemove', onDrag);
+          document.removeEventListener('touchmove', onDrag);
+          document.removeEventListener('mouseup', stopDrag);
+          document.removeEventListener('touchend', stopDrag);
+          localStorage.setItem('my_chaos_stickers', JSON.stringify(stickers));
+        }
+      }
+    }
+
+    function rotateSticker(id) {
+      const stk = stickers.find(s => s.id === id);
+      if (stk) {
+        stk.rotation = (stk.rotation + 25) % 360;
+        renderStickers();
+      }
+    }
+
+    function resizeSticker(id) {
+      const stk = stickers.find(s => s.id === id);
+      if (stk) {
+        stk.scale = stk.scale >= 2.2 ? 0.8 : stk.scale + 0.3;
+        renderStickers();
+      }
+    }
+
+    function deleteSticker(id) {
+      stickers = stickers.filter(s => s.id !== id);
+      renderStickers();
+    }
+
+    function clearAllStickers() {
+      if (confirm("Clear all stickers from canvas?")) {
+        stickers = [];
+        renderStickers();
+      }
+    }
+
+    /* DATA BACKUP & IMPORT LOGIC */
+    function exportData() {
+      const fullData = {
+        opinions,
+        watchlist,
+        wishlist,
+        stickers
+      };
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullData, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `my_happy_little_chaos_backup.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    function importData(event) {
+      const fileReader = new FileReader();
+      fileReader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported.opinions) opinions = imported.opinions;
+          if (imported.watchlist) watchlist = imported.watchlist;
+          if (imported.wishlist) wishlist = imported.wishlist;
+          if (imported.stickers) stickers = imported.stickers;
+
+          renderOpinions();
+          renderWatchlist();
+          renderWishlist();
+          renderStickers();
+          alert("✨ Chaos Scrapbook restored successfully! ✨");
+        } catch (err) {
+          alert("Invalid JSON backup file!");
+        }
+      };
+      fileReader.readAsText(event.target.files[0]);
+    }
+  </script>
+</body>
+</html>
